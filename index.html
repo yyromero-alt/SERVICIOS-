@@ -190,6 +190,15 @@
     }
     .btn-clear-firma:hover { color:var(--rojo); border-color:var(--rojo); }
 
+    /* FOTOS EVIDENCIA */
+    .foto-wrap {
+      border:1.5px dashed #cdd5db; border-radius:6px;
+      background:#fafafa; position:relative; overflow:hidden; margin-bottom:8px;
+      height:180px; display:flex; align-items:center; justify-content:center;
+    }
+    .foto-preview { width:100%; height:100%; object-fit:cover; display:none; }
+    .foto-placeholder { color:#aaa; font-size:13px; text-align:center; padding:10px; }
+
     /* HISTORIAL */
     .hist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
     .hist-card {
@@ -362,6 +371,38 @@
       </div>
 
       <div class="card">
+        <div class="card-header">📷 Evidencia Fotográfica (2 fotos)</div>
+        <div class="card-body">
+          <div class="firma-grid">
+            <div class="firma-col">
+              <h3>FOTO 1</h3>
+              <div class="foto-wrap" id="foto-wrap-1">
+                <img class="foto-preview" id="foto-preview-1" alt="Foto 1">
+                <div class="foto-placeholder" id="foto-placeholder-1">📷 Sin foto capturada</div>
+              </div>
+              <input type="file" accept="image/*" capture="environment" id="foto-input-1" style="display:none" onchange="cargarFoto(1, this)">
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-azul" style="flex:1;" onclick="document.getElementById('foto-input-1').click()">📷 Tomar / Subir Foto</button>
+                <button class="btn-clear-firma" onclick="clearFoto(1)">✕ Quitar</button>
+              </div>
+            </div>
+            <div class="firma-col">
+              <h3>FOTO 2</h3>
+              <div class="foto-wrap" id="foto-wrap-2">
+                <img class="foto-preview" id="foto-preview-2" alt="Foto 2">
+                <div class="foto-placeholder" id="foto-placeholder-2">📷 Sin foto capturada</div>
+              </div>
+              <input type="file" accept="image/*" capture="environment" id="foto-input-2" style="display:none" onchange="cargarFoto(2, this)">
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-azul" style="flex:1;" onclick="document.getElementById('foto-input-2').click()">📷 Tomar / Subir Foto</button>
+                <button class="btn-clear-firma" onclick="clearFoto(2)">✕ Quitar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
         <div class="card-header">✍️ Firmas de Responsabilidad</div>
         <div class="card-body">
           <div class="firma-grid">
@@ -430,7 +471,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUmmop6lepR6shdDrTVcXCLsO6krXt00abirCE0lbtiyyatul8oCgmmS5KwQcSgxhv4g/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa-PY661wamboO9I1vk-KfK3Q5fkc-ZlcR-ofrQwGATDFBnPDxV1RWvpxlt2EB8WNt3A/exec";
     const STORAGE_KEY = 'imc_formatos_v3';
 
     let tipoSel = 1;
@@ -439,6 +480,7 @@
     let firmasData = {};
     let drawing = {};
     let archivosDrive = [];
+    let fotosData = { 1: null, 2: null };
 
     document.addEventListener('DOMContentLoaded', () => {
       const hoy = new Date();
@@ -538,6 +580,7 @@
       recalc();
 
       cargarFirmas(d.firmas);
+      cargarFotos(d.fotos);
 
       showTab('form', document.querySelectorAll('.tab')[0]);
       toast('📋 Datos cargados en el formulario', 'success');
@@ -580,6 +623,63 @@
         firmasData[id] = dataUrl;
       };
       img.src = dataUrl;
+    }
+
+    // ===== EVIDENCIA FOTOGRÁFICA =====
+    function cargarFoto(n, input) {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { toast('❌ El archivo debe ser una imagen', 'error'); return; }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Comprimimos/redimensionamos para no generar PDFs demasiado pesados
+          const maxAncho = 1000;
+          const escala = Math.min(1, maxAncho / img.width);
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width * escala;
+          canvas.height = img.height * escala;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+          fotosData[n] = dataUrl;
+          mostrarFotoPreview(n, dataUrl);
+          toast(`✅ Foto ${n} capturada`, 'success');
+        };
+        img.onerror = () => toast('❌ No se pudo procesar la imagen', 'error');
+        img.src = e.target.result;
+      };
+      reader.onerror = () => toast('❌ Error al leer el archivo', 'error');
+      reader.readAsDataURL(file);
+    }
+
+    function mostrarFotoPreview(n, dataUrl) {
+      const img = document.getElementById('foto-preview-' + n);
+      const placeholder = document.getElementById('foto-placeholder-' + n);
+      img.src = dataUrl;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+    }
+
+    function clearFoto(n) {
+      fotosData[n] = null;
+      const img = document.getElementById('foto-preview-' + n);
+      const placeholder = document.getElementById('foto-placeholder-' + n);
+      img.style.display = 'none';
+      img.removeAttribute('src');
+      placeholder.style.display = 'flex';
+      const input = document.getElementById('foto-input-' + n);
+      if (input) input.value = '';
+    }
+
+    function cargarFotos(fotos) {
+      clearFoto(1);
+      clearFoto(2);
+      if (!fotos) return;
+      if (fotos.foto1) { fotosData[1] = fotos.foto1; mostrarFotoPreview(1, fotos.foto1); }
+      if (fotos.foto2) { fotosData[2] = fotos.foto2; mostrarFotoPreview(2, fotos.foto2); }
     }
 
     function actualizarConsec() {
@@ -689,6 +789,10 @@
         chkSer: document.getElementById('chk-ser').querySelector('.check-badge').textContent,
         chkFoto: document.getElementById('chk-foto').querySelector('.check-badge').textContent,
         obs: document.getElementById('obs').value,
+        fotos: {
+          foto1: fotosData[1] || null,
+          foto2: fotosData[2] || null
+        },
         firmas: {
           'imc-ent': { img: firmasData['imc-ent'], nombre: document.getElementById('firma-imc-ent-nombre').value },
           'imc-rec': { img: firmasData['imc-rec'], nombre: document.getElementById('firma-imc-rec-nombre').value },
