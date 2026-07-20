@@ -471,7 +471,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa-PY661wamboO9I1vk-KfK3Q5fkc-ZlcR-ofrQwGATDFBnPDxV1RWvpxlt2EB8WNt3A/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfLCpy0NkPOGwtdqoikNYwDSxQJZONxK9OU4wkcRP2P-lnc2YprQnMoPTMfDV3EVvISg/exec";
     const STORAGE_KEY = 'imc_formatos_v3';
 
     let tipoSel = 1;
@@ -536,21 +536,34 @@
       `).join('');
     }
 
-    function abrirOpciones(idx) {
-      const f = archivosDrive[idx];
-      document.getElementById('modal-title').textContent = f.nombre;
-      document.getElementById('btn-ver-pdf').onclick = () => { window.open(f.url, '_blank'); cerrarModalDirecto(); };
-      
-      const btnEdit = document.getElementById('btn-editar-form');
-      btnEdit.style.display = 'block';
-      if (f.datos) {
-        btnEdit.onclick = () => { cargarEnFormulario(f.datos); cerrarModalDirecto(); };
+async function abrirOpciones(idx) {
+  const f = archivosDrive[idx];
+  document.getElementById('modal-title').textContent = f.nombre;
+  document.getElementById('btn-ver-pdf').onclick = () => { window.open(f.url, '_blank'); cerrarModalDirecto(); };
+
+  const btnEdit = document.getElementById('btn-editar-form');
+  btnEdit.style.display = 'block';
+  btnEdit.textContent = '✏️ Editar Datos';
+  btnEdit.onclick = async () => {
+    btnEdit.textContent = '⏳ Cargando...';
+    try {
+      const resp = await fetch(`${SCRIPT_URL}?accion=datos&fileId=${f.id}`);
+      const data = await resp.json();
+      if (data.ok && data.datos) {
+        cargarEnFormulario(data.datos);
+        cerrarModalDirecto();
       } else {
-        btnEdit.onclick = () => { toast('📄 Este PDF no tiene datos editables', 'info'); };
+        toast('📄 Este PDF no tiene datos editables', 'info');
       }
-      
-      document.getElementById('modal-opciones').classList.add('open');
+    } catch (e) {
+      toast('❌ No se pudo cargar la información', 'error');
+    } finally {
+      btnEdit.textContent = '✏️ Editar Datos';
     }
+  };
+
+  document.getElementById('modal-opciones').classList.add('open');
+}
 
     function cargarEnFormulario(d) {
       document.getElementById('num-sec').value = d.numSec;
