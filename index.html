@@ -19,7 +19,6 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Arial, sans-serif; background: #E8EEF2; min-height: 100vh; padding: 0; }
-
     /* NAV */
     .topbar {
       background: var(--azul2); color: #fff;
@@ -44,7 +43,6 @@
     .btn-azul    { background:var(--azul);   color:#fff; }
     .btn-rojo    { background:var(--rojo);   color:#fff; }
     .btn-gris    { background:#607d8b;       color:#fff; }
-
     /* TABS */
     .tabs { background: var(--azul); display: flex; gap: 2px; padding: 0 24px; }
     .tab {
@@ -54,12 +52,10 @@
     }
     .tab.active { color:#fff; border-bottom-color: var(--dorado); }
     .tab:hover:not(.active) { color:#fff; }
-
     /* MAIN */
     .main { padding: 24px; max-width: 1100px; margin: 0 auto; }
     .panel { display:none; }
     .panel.active { display:block; }
-
     /* CARDS */
     .card {
       background: #fff; border-radius: 10px;
@@ -72,7 +68,6 @@
       letter-spacing: .4px; display: flex; align-items: center; gap: 8px;
     }
     .card-body { padding: 20px; }
-
     /* HEADER FORM */
     .header-form {
       display: grid; grid-template-columns: auto 1fr auto;
@@ -90,7 +85,6 @@
       border-radius: 6px; display: inline-block; border: 2px solid var(--azul);
     }
     .consec-label { font-size:11px; color:#888; margin-bottom:4px; }
-
     /* GRIDS */
     .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
     .field { display:flex; flex-direction:column; gap:4px; }
@@ -104,7 +98,6 @@
       outline: none; border-color: var(--azul);
       box-shadow: 0 0 0 3px rgba(33,94,122,.12);
     }
-
     /* TIPO MOVIMIENTO */
     .tipo-box { display:flex; gap:12px; }
     .tipo-opt {
@@ -121,7 +114,6 @@
     }
     .tipo-opt.selected .dot { background:var(--azul); border-color:var(--azul); }
     .tipo-opt.selected .dot::after { content:''; width:8px; height:8px; background:#fff; border-radius:50%; display:block; }
-
     /* TABLA DETALLE */
     .tabla-wrap { overflow-x:auto; }
     table.detalle { width:100%; border-collapse:collapse; font-size:13px; }
@@ -153,7 +145,6 @@
       color:#999; font-size:13px; cursor:pointer; transition:all .15s;
     }
     .btn-add-row:hover { border-color:var(--azul); color:var(--azul); background:rgba(33,94,122,.04); }
-
     /* VERIFICACIONES */
     .checks-row { display:flex; gap:12px; flex-wrap:wrap; }
     .check-item {
@@ -175,7 +166,6 @@
     .check-badge { margin-left:auto; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; background:#fff; }
     .check-item.si .check-badge { color:var(--verde); }
     .check-item.no .check-badge { color:var(--rojo); }
-
     /* FIRMAS */
     .firma-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
     .firma-col h3 { font-size:13px; font-weight:700; color:var(--azul); margin-bottom:14px; padding-bottom:6px; border-bottom:2px solid var(--azul); }
@@ -189,7 +179,6 @@
       font-size:11px; padding:3px 10px; cursor:pointer; color:#888;
     }
     .btn-clear-firma:hover { color:var(--rojo); border-color:var(--rojo); }
-
     /* FOTOS EVIDENCIA */
     .foto-wrap {
       border:1.5px dashed #cdd5db; border-radius:6px;
@@ -198,7 +187,6 @@
     }
     .foto-preview { width:100%; height:100%; object-fit:cover; display:none; }
     .foto-placeholder { color:#aaa; font-size:13px; text-align:center; padding:10px; }
-
     /* HISTORIAL */
     .hist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
     .hist-card {
@@ -215,7 +203,6 @@
     .badge.tipo-imc { background:rgba(33,94,122,.12); color:var(--azul2); }
     .badge.tipo-imp { background:rgba(242,169,0,.15); color:#7a5000; }
     .hist-empty { text-align:center; color:#aaa; padding:40px; font-size:14px; }
-
     /* TOAST */
     .toast {
       position:fixed; bottom:24px; right:24px;
@@ -229,7 +216,6 @@
     .toast.show { opacity:1; transform:translateY(0); }
     .toast.success { background:var(--verde); }
     .toast.error   { background:var(--rojo); }
-
     /* MODAL */
     .modal-overlay {
       display:none; position:fixed; inset:0;
@@ -246,7 +232,10 @@
     .modal h2 { font-size:18px; color:var(--azul2); margin-bottom:15px; }
     .modal p { font-size:14px; color:#666; margin-bottom:25px; }
     .modal-btns { display:flex; gap:10px; justify-content:center; }
-
+    /* REPORTE ENTREGAS */
+    .badge-completo { background:rgba(39,174,96,.15); color:var(--verde); }
+    .badge-falta { background:rgba(231,76,60,.15); color:var(--rojo); }
+    .reporte-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:10px; display:inline-block; }
     @media(max-width:700px){
       .grid3,.firma-grid { grid-template-columns:1fr; }
       .header-form { grid-template-columns:1fr; }
@@ -273,12 +262,11 @@
       <button class="btn btn-verde"  onclick="guardarFormato()">💾 Guardar y Generar PDF</button>
     </div>
   </div>
-
   <div class="tabs">
     <div class="tab active" onclick="showTab('form', this)">📝 Formulario</div>
     <div class="tab" onclick="showTab('historial', this)">📁 Archivos Drive</div>
+    <div class="tab" onclick="showTab('reporte', this)">📊 Reporte Entregas</div>
   </div>
-
   <div class="main">
     <!-- PANEL FORMULARIO -->
     <div id="panel-form" class="panel active">
@@ -312,7 +300,6 @@
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">📦 Detalle de la Mercancía <span id="resumen-items" style="margin-left:auto;font-weight:400;opacity:.8;">0 ítems</span></div>
         <div class="card-body">
@@ -342,7 +329,6 @@
           <button class="btn-add-row" onclick="addRow()">+ Agregar nueva fila</button>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">✅ Verificaciones y Observaciones</div>
         <div class="card-body">
@@ -369,7 +355,6 @@
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">📷 Evidencia Fotográfica (2 fotos)</div>
         <div class="card-body">
@@ -401,7 +386,6 @@
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">✍️ Firmas de Responsabilidad</div>
         <div class="card-body">
@@ -436,7 +420,6 @@
         </div>
       </div>
     </div>
-
     <!-- PANEL HISTORIAL -->
     <div id="panel-historial" class="panel">
       <div class="card">
@@ -454,7 +437,37 @@
       </div>
     </div>
   </div>
-
+  <!-- PANEL REPORTE ENTREGAS -->
+    <div id="panel-reporte" class="panel">
+      <div class="card">
+        <div class="card-header">
+          📊 Reporte de Entregas
+          <span style="margin-left:auto; display:flex; gap:10px;">
+            <button class="btn btn-dorado" onclick="generarReporte()" style="padding:4px 10px; font-size:11px;">🔄 Generar Reporte</button>
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="tabla-wrap">
+            <table class="detalle" id="tbl-reporte">
+            <thead>
+                <tr>
+                  <th style="width:50px;">#</th>
+                  <th style="width:140px;">Consecutivo Inicial</th>
+                  <th>Formulario</th>
+                  <th style="width:150px;">Fecha Entrega a Servicios</th>
+                  <th style="width:150px;">Fecha Recepción a IMC</th>
+                  <th style="width:190px;">Estado</th>
+                  <th style="width:90px;">Unidades</th>
+                </tr>
+              </thead>
+              <tbody id="reporte-body">
+                <tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Presiona "Generar Reporte" para cargar los datos</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   <!-- MODAL DE OPCIONES -->
   <div class="modal-overlay" id="modal-opciones" onclick="cerrarModal(event)">
     <div class="modal">
@@ -467,13 +480,10 @@
       </div>
     </div>
   </div>
-
   <div class="toast" id="toast"></div>
-
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyfLCpy0NkPOGwtdqoikNYwDSxQJZONxK9OU4wkcRP2P-lnc2YprQnMoPTMfDV3EVvISg/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDcVmiiY9BC76L-H9VF3Pf_usKigdOYGn7KRti9c0g8-3SGQUCCFaI0grJcJZ6uT_g/exec";
     const STORAGE_KEY = 'imc_formatos_v3';
-
     let tipoSel = 1;
     let rowCount = 0;
     const FIRMA_IDS = ['imc-ent', 'imc-rec', 'ser-ent', 'ser-rec'];
@@ -481,7 +491,11 @@
     let drawing = {};
     let archivosDrive = [];
     let fotosData = { 1: null, 2: null };
-
+    let fileIdActual = null;
+    let fechaCreacionActual = null;
+    let consecutivoInicialActual = null;
+    let estadoOriginalCompleto = false;
+let firmasFechas = {};
     document.addEventListener('DOMContentLoaded', () => {
       const hoy = new Date();
       document.getElementById('fecha').value = hoy.toISOString().slice(0,10);
@@ -492,15 +506,14 @@
       for (let i = 0; i < 5; i++) addRow();
       initFirmas();
     });
-
     function showTab(id, el) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById('panel-' + id).classList.add('active');
       el.classList.add('active');
       if (id === 'historial') sincronizarDrive();
+      if (id === 'reporte') generarReporte();
     }
-
     async function sincronizarDrive() {
       toast('⏳ Sincronizando con Drive...', 'info');
       try {
@@ -513,17 +526,14 @@
         }
       } catch (e) { toast('❌ Error de conexión', 'error'); }
     }
-
     function renderHistorialDrive() {
       const q = (document.getElementById('search-hist')?.value || '').toLowerCase();
       const grid = document.getElementById('hist-grid');
       const filtrado = archivosDrive.filter(f => f.nombre.toLowerCase().includes(q));
-
       if (filtrado.length === 0) {
         grid.innerHTML = '<div class="hist-empty">📭 Sin archivos</div>';
         return;
       }
-
       grid.innerHTML = filtrado.map((f, i) => `
         <div class="hist-card" onclick="abrirOpciones(${i})">
           <div class="consec">${f.nombre}</div>
@@ -535,37 +545,71 @@
         </div>
       `).join('');
     }
-
-async function abrirOpciones(idx) {
-  const f = archivosDrive[idx];
-  document.getElementById('modal-title').textContent = f.nombre;
-  document.getElementById('btn-ver-pdf').onclick = () => { window.open(f.url, '_blank'); cerrarModalDirecto(); };
-
-  const btnEdit = document.getElementById('btn-editar-form');
-  btnEdit.style.display = 'block';
-  btnEdit.textContent = '✏️ Editar Datos';
-  btnEdit.onclick = async () => {
-    btnEdit.textContent = '⏳ Cargando...';
-    try {
-      const resp = await fetch(`${SCRIPT_URL}?accion=datos&fileId=${f.id}`);
-      const data = await resp.json();
-      if (data.ok && data.datos) {
-        cargarEnFormulario(data.datos);
-        cerrarModalDirecto();
-      } else {
-        toast('📄 Este PDF no tiene datos editables', 'info');
+    async function generarReporte() {
+      const body = document.getElementById('reporte-body');
+      body.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">⏳ Cargando datos de la hoja...</td></tr>';
+      try {
+        const resp = await fetch(`${SCRIPT_URL}?accion=reporte`);
+        const data = await resp.json();
+        if (!data.ok) throw new Error(data.msg || 'Error');
+        const filas = data.filas || [];
+        if (filas.length === 0) {
+          body.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">📭 Sin registros en la hoja de cálculo</td></tr>';
+          return;
+        }
+        body.innerHTML = filas.map((r, i) => {
+          const completo = r.estado === 'COMPLETO';
+          const clase = completo ? 'badge-completo' : 'badge-falta';
+          return `
+            <tr>
+              <td style="text-align:center;">${i + 1}</td>
+              <td class="left" style="font-size:12px;color:#888;">${r.consecutivoInicial || '—'}</td>
+              <td class="left">${r.consecutivo}</td>
+              <td style="text-align:center;font-size:12px;">${r.fechaEntregaServicios || '—'}</td>
+              <td style="text-align:center;font-size:12px;">${r.fechaRecepcionIMC || '—'}</td>
+              <td style="text-align:center;"><span class="reporte-badge ${clase}">${r.estado}</span></td>
+              <td style="text-align:center;font-weight:700;">${r.unidades ?? 0}</td>
+            </tr>
+          `;
+        }).join('');
+      } catch (e) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--rojo);padding:30px;">❌ Error al leer la hoja de cálculo</td></tr>';
       }
-    } catch (e) {
-      toast('❌ No se pudo cargar la información', 'error');
-    } finally {
-      btnEdit.textContent = '✏️ Editar Datos';
     }
-  };
-
-  document.getElementById('modal-opciones').classList.add('open');
-}
+    async function abrirOpciones(idx) {
+      const f = archivosDrive[idx];
+      document.getElementById('modal-title').textContent = f.nombre;
+      document.getElementById('btn-ver-pdf').onclick = () => { window.open(f.url, '_blank'); cerrarModalDirecto(); };
+      const btnEdit = document.getElementById('btn-editar-form');
+      btnEdit.style.display = 'block';
+      btnEdit.textContent = '✏️ Editar Datos';
+      btnEdit.onclick = async () => {
+        btnEdit.textContent = '⏳ Cargando...';
+        try {
+          const resp = await fetch(`${SCRIPT_URL}?accion=datos&fileId=${f.id}`);
+          const data = await resp.json();
+          if (data.ok && data.datos) {
+            fileIdActual = f.id;
+            cargarEnFormulario(data.datos);
+            cerrarModalDirecto();
+          } else {
+            toast('📄 Este PDF no tiene datos editables', 'info');
+          }
+        } catch (e) {
+          toast('❌ No se pudo cargar la información', 'error');
+        } finally {
+          btnEdit.textContent = '✏️ Editar Datos';
+        }
+      };
+      document.getElementById('modal-opciones').classList.add('open');
+    }
+    
 
     function cargarEnFormulario(d) {
+      fechaCreacionActual = d.fechaCreacion || d.fecha || null;
+      consecutivoInicialActual = d.consecutivoInicial || d.consecutivo || null;
+      const fOrig = d.firmas || {};
+      estadoOriginalCompleto = !!(fOrig['ser-ent'] && fOrig['ser-ent'].img && fOrig['ser-rec'] && fOrig['ser-rec'].img);
       document.getElementById('num-sec').value = d.numSec;
       actualizarConsec();
       document.getElementById('fecha').value = d.fecha;
@@ -575,11 +619,9 @@ async function abrirOpciones(idx) {
       document.getElementById('area').value = d.area;
       document.getElementById('obs').value = d.obs;
       selTipo(d.tipo.includes('IMC →') ? 1 : 2);
-
       if (d.chkCant) setChk('chk-cant', d.chkCant === 'SÍ');
       if (d.chkSer)  setChk('chk-ser',  d.chkSer  === 'SÍ');
       if (d.chkFoto) setChk('chk-foto', d.chkFoto === 'SÍ');
-
       document.querySelectorAll('#tbl-body tr').forEach(tr => tr.remove());
       rowCount = 0;
       d.items.forEach(it => {
@@ -591,14 +633,11 @@ async function abrirOpciones(idx) {
         last.querySelector('.serial').value = it.serial;
       });
       recalc();
-
       cargarFirmas(d.firmas);
       cargarFotos(d.fotos);
-
       showTab('form', document.querySelectorAll('.tab')[0]);
       toast('📋 Datos cargados en el formulario', 'success');
     }
-
     function setChk(id, esSi) {
       const el = document.getElementById(id);
       el.classList.toggle('si', esSi);
@@ -606,28 +645,25 @@ async function abrirOpciones(idx) {
       el.querySelector('.check-box').textContent = esSi ? '✓' : '✗';
       el.querySelector('.check-badge').textContent = esSi ? 'SÍ' : 'NO';
     }
-
     function cargarFirmas(firmas) {
       if (!firmas) return;
       FIRMA_IDS.forEach(id => {
         const f = firmas[id];
         const nombreInput = document.getElementById('firma-' + id + '-nombre');
         if (nombreInput) nombreInput.value = (f && f.nombre) ? f.nombre : '';
-
         if (f && f.img) {
           dibujarFirmaEnCanvas(id, f.img);
+          firmasFechas[id] = f.fecha || null;
         } else {
           clearFirma(id);
         }
       });
     }
-
     function dibujarFirmaEnCanvas(id, dataUrl) {
       const canvas = document.getElementById('canvas-' + id);
       const ctx = canvas.getContext('2d');
       const img = new Image();
       img.onload = () => {
-        // canvas.width/height ya están escalados por devicePixelRatio en initFirmas()
         const ratio = window.devicePixelRatio || 1;
         const cssW = canvas.width / ratio;
         const cssH = canvas.height / ratio;
@@ -637,18 +673,14 @@ async function abrirOpciones(idx) {
       };
       img.src = dataUrl;
     }
-
-    // ===== EVIDENCIA FOTOGRÁFICA =====
     function cargarFoto(n, input) {
       const file = input.files && input.files[0];
       if (!file) return;
       if (!file.type.startsWith('image/')) { toast('❌ El archivo debe ser una imagen', 'error'); return; }
-
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          // Comprimimos/redimensionamos para no generar PDFs demasiado pesados
           const maxAncho = 1000;
           const escala = Math.min(1, maxAncho / img.width);
           const canvas = document.createElement('canvas');
@@ -667,7 +699,6 @@ async function abrirOpciones(idx) {
       reader.onerror = () => toast('❌ Error al leer el archivo', 'error');
       reader.readAsDataURL(file);
     }
-
     function mostrarFotoPreview(n, dataUrl) {
       const img = document.getElementById('foto-preview-' + n);
       const placeholder = document.getElementById('foto-placeholder-' + n);
@@ -675,7 +706,6 @@ async function abrirOpciones(idx) {
       img.style.display = 'block';
       placeholder.style.display = 'none';
     }
-
     function clearFoto(n) {
       fotosData[n] = null;
       const img = document.getElementById('foto-preview-' + n);
@@ -686,7 +716,6 @@ async function abrirOpciones(idx) {
       const input = document.getElementById('foto-input-' + n);
       if (input) input.value = '';
     }
-
     function cargarFotos(fotos) {
       clearFoto(1);
       clearFoto(2);
@@ -694,7 +723,6 @@ async function abrirOpciones(idx) {
       if (fotos.foto1) { fotosData[1] = fotos.foto1; mostrarFotoPreview(1, fotos.foto1); }
       if (fotos.foto2) { fotosData[2] = fotos.foto2; mostrarFotoPreview(2, fotos.foto2); }
     }
-
     function actualizarConsec() {
       const n = parseInt(document.getElementById('num-sec').value) || 1;
       const hoy = new Date();
@@ -703,13 +731,11 @@ async function abrirOpciones(idx) {
       const y = hoy.getFullYear();
       document.getElementById('consec-display').textContent = `IMC-${d}${m}${y}-${String(n).padStart(3,'0')}`;
     }
-
     function selTipo(n) {
       tipoSel = n;
       document.getElementById('tipo-1').classList.toggle('selected', n === 1);
       document.getElementById('tipo-2').classList.toggle('selected', n === 2);
     }
-
     function addRow() {
       rowCount++;
       const tbody = document.getElementById('tbl-body');
@@ -725,7 +751,6 @@ async function abrirOpciones(idx) {
       tbody.appendChild(tr);
       recalc();
     }
-
     function delRow(btn) { btn.closest('tr').remove(); renumRows(); recalc(); }
     function renumRows() { document.querySelectorAll('#tbl-body tr').forEach((tr, i) => { tr.querySelector('.td-num').textContent = i + 1; }); }
     function recalc() {
@@ -738,7 +763,6 @@ async function abrirOpciones(idx) {
       document.getElementById('total-cant').textContent = total;
       document.getElementById('resumen-items').textContent = `${items} ítems`;
     }
-
     function toggleChk(id) {
       const el = document.getElementById(id);
       const esSi = el.classList.contains('si');
@@ -746,7 +770,6 @@ async function abrirOpciones(idx) {
       el.querySelector('.check-box').textContent = esSi ? '✗' : '✓';
       el.querySelector('.check-badge').textContent = esSi ? 'NO' : 'SÍ';
     }
-
     function initFirmas() {
       FIRMA_IDS.forEach(id => {
         const canvas = document.getElementById('canvas-' + id);
@@ -763,19 +786,35 @@ async function abrirOpciones(idx) {
         };
         const start = (e) => { drawing[id] = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
         const move = (e) => { if (!drawing[id]) return; if (e.touches) e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
-        const stop = () => { if (drawing[id]) { drawing[id] = false; firmasData[id] = canvas.toDataURL('image/png'); } };
+        const stop = () => { if (drawing[id]) { drawing[id] = false; firmasData[id] = canvas.toDataURL('image/png'); firmasFechas[id] = new Date().toISOString(); } };
         canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move);
         canvas.addEventListener('mouseup', stop); canvas.addEventListener('touchstart', start);
         canvas.addEventListener('touchmove', move); canvas.addEventListener('touchend', stop);
       });
     }
-
     function clearFirma(id) {
       const canvas = document.getElementById('canvas-' + id);
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
       firmasData[id] = null;
+      firmasFechas[id] = null;
     }
-
+    async function consecutivoDisponible() {
+      const consecActual = document.getElementById('consec-display').textContent;
+      try {
+        const resp = await fetch(SCRIPT_URL);
+        const dataResp = await resp.json();
+        if (dataResp.ok) {
+          archivosDrive = dataResp.archivos;
+          const existente = archivosDrive.find(f => f.nombre === consecActual + '.pdf');
+          if (existente && existente.id !== fileIdActual) {
+            return false;
+          }
+        }
+      } catch (e) {
+        // si falla la verificación, no bloqueamos el guardado
+      }
+      return true;
+    }
     async function guardarFormato() {
       const items = [];
       document.querySelectorAll('#tbl-body tr').forEach(tr => {
@@ -787,7 +826,32 @@ async function abrirOpciones(idx) {
       });
       if (items.length === 0) { toast('Agregue ítems', 'error'); return; }
 
+      // ¿Estaba guardado SIN las firmas de SERVICIOS y ahora SÍ las tiene?
+      // => es la vuelta completa (SERVICIOS → IMC): se guarda como PDF NUEVO,
+      // sin borrar el original, para que queden los dos en Drive.
+      const completoAhora = !!(firmasData['ser-ent'] && firmasData['ser-rec']);
+      const esNuevaEntregaCompletada = !!fileIdActual && !estadoOriginalCompleto && completoAhora;
+
+      if (esNuevaEntregaCompletada) {
+        const nInput = document.getElementById('num-sec');
+        nInput.value = parseInt(nInput.value) + 1;
+        actualizarConsec();
+        toast('📌 Entrega completa: se guardará como formato NUEVO, conservando el original', 'info');
+      }
+
+      toast('⏳ Verificando N° Secuencial...', 'info');
+      const disponible = await consecutivoDisponible();
+      if (!disponible) {
+        toast('❌ Ese N° Secuencial ya fue guardado. Cambia el número o edítalo desde Archivos Drive.', 'error');
+        return;
+      }
+      if (!fechaCreacionActual) fechaCreacionActual = new Date().toISOString();
+      if (!consecutivoInicialActual) consecutivoInicialActual = document.getElementById('consec-display').textContent;
       const data = {
+        // Si es la entrega completada, NO se manda fileIdReemplazar => el backend NO borra el PDF original
+        fileIdReemplazar: esNuevaEntregaCompletada ? null : fileIdActual,
+        fechaCreacion: fechaCreacionActual,
+        consecutivoInicial: consecutivoInicialActual,
         consecutivo: document.getElementById('consec-display').textContent,
         numSec: document.getElementById('num-sec').value,
         fecha: document.getElementById('fecha').value,
@@ -807,13 +871,12 @@ async function abrirOpciones(idx) {
           foto2: fotosData[2] || null
         },
         firmas: {
-          'imc-ent': { img: firmasData['imc-ent'], nombre: document.getElementById('firma-imc-ent-nombre').value },
-          'imc-rec': { img: firmasData['imc-rec'], nombre: document.getElementById('firma-imc-rec-nombre').value },
-          'ser-ent': { img: firmasData['ser-ent'], nombre: document.getElementById('firma-ser-ent-nombre').value },
-          'ser-rec': { img: firmasData['ser-rec'], nombre: document.getElementById('firma-ser-rec-nombre').value }
+          'imc-ent': { img: firmasData['imc-ent'], nombre: document.getElementById('firma-imc-ent-nombre').value, fecha: firmasFechas['imc-ent'] || null },
+          'imc-rec': { img: firmasData['imc-rec'], nombre: document.getElementById('firma-imc-rec-nombre').value, fecha: firmasFechas['imc-rec'] || null },
+          'ser-ent': { img: firmasData['ser-ent'], nombre: document.getElementById('firma-ser-ent-nombre').value, fecha: firmasFechas['ser-ent'] || null },
+          'ser-rec': { img: firmasData['ser-rec'], nombre: document.getElementById('firma-ser-rec-nombre').value, fecha: firmasFechas['ser-rec'] || null }
         }
       };
-
       toast('⏳ Guardando en Drive...', 'info');
       try {
         await fetch(SCRIPT_URL, {
@@ -824,13 +887,15 @@ async function abrirOpciones(idx) {
         });
         toast('✅ Guardado exitoso', 'success');
       } catch (e) { toast('❌ Error al guardar', 'error'); }
-
+      fileIdActual = null;
+      fechaCreacionActual = null;
+      consecutivoInicialActual = null;
+      estadoOriginalCompleto = false;
       const nInput = document.getElementById('num-sec');
       nInput.value = parseInt(nInput.value) + 1;
       localStorage.setItem('imc_ultimo_sec', nInput.value);
       actualizarConsec();
     }
-
     function cerrarModal(e) { if (e.target.id === 'modal-opciones') cerrarModalDirecto(); }
     function cerrarModalDirecto() { document.getElementById('modal-opciones').classList.remove('open'); }
     function toast(msg, type = '') {
